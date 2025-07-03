@@ -1,0 +1,14 @@
+ /**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://vuetifyjs.com/features/sass-variables/`
+@use 'vuetify/settings' with (
+  $app-bar-padding-start: 16px,
+  $app-bar-padding-end: 16px,
+  $sheet-background: rgb(var(--v-theme-background)),
+  $body-font-family: 'Averta',
+  $heading-font-family: 'Averta',
+);

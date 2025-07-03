@@ -1,0 +1,5 @@
+{
+    "default": "/es",
+    "/": "/es",
+    "/account/login": "/es/cuenta/acceso"
+}
