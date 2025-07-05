@@ -13,11 +13,8 @@ declare module 'vue' {
     HeroTitle: typeof import('./components/Hero/HeroTitle.vue')['default']
     LocaleSwitcher: typeof import('./components/Generic/LocaleSwitcher.vue')['default']
     LoginForm: typeof import('./components/Form/LoginForm.vue')['default']
-    NavigationForm: typeof import('./components/Form/Bible/NavigationForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SearchForm: typeof import('./components/Form/Bible/SearchForm.vue')['default']
     ThemeSwitcher: typeof import('./components/Generic/ThemeSwitcher.vue')['default']
-    VerseScroller: typeof import('./components/Layout/VerseScroller.vue')['default']
   }
 }

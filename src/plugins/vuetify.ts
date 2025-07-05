@@ -36,16 +36,16 @@ export default createVuetify({
       light: {
         dark: false,
         colors: {
-          background: '#fffeee',
-          surface: '#cccbbe',
-          primary: '#6200EE',
-          'primary-darken-1': '#3700B3',
-          secondary: '#03DAC6',
-          'secondary-darken-1': '#018786',
-          error: '#B00020',
-          info: '#2196F3',
-          success: '#4CAF50',
-          warning: '#FB8C00',
+          background: '#ffffff',
+          surface: '#f8f9fa', // Bootstrap light
+          primary: '#0d6efd',
+          'primary-darken-1': '#0b5ed7',
+          secondary: '#6c757d',
+          'secondary-darken-1': '#5c636a',
+          error: '#dc3545',     // Bootstrap danger
+          info: '#0dcaf0',      // Bootstrap info
+          success: '#198754',   // Bootstrap success
+          warning: '#ffc107',   // Bootstrap warning
         },
       },
     },

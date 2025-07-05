@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from 'axios';
-import { useAppStore } from '@/stores/app'
 
 export const api = (): AxiosInstance => {
   const axiosInstance: AxiosInstance = axios.create({

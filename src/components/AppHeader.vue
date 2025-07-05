@@ -2,16 +2,20 @@
   <v-app-bar absolute color="surface" class="justify-center" :height="88">
     <template v-slot:prepend>
       <router-link :to="{ path: t('/') }">
-        <v-img
-          height="48"
-          src="@/assets/logo.png"
-          width="48"
+        <v-img v-if="isDark"
+          height="64"
+          src="@/assets/logo-dark.png"
+          width="64"
+        />
+        <v-img v-else
+               height="64"
+               src="@/assets/logo.png"
+               width="64"
         />
       </router-link>
     </template>
-    <v-app-bar-title>Bible Miner</v-app-bar-title>
+    <v-app-bar-title>PhalVu</v-app-bar-title>
     <template v-if="!$vuetify.display.mobile">
-      <search-form class="mr-10" />
       <v-btn
         v-if="route.path !== t('/account/login')"
         color="primary"
@@ -37,7 +41,6 @@
   >
     <v-list>
       <v-list-item>
-        <search-form />
       </v-list-item>
       <v-list-item v-if="route.path !== t('/account/login')">
         <v-btn
@@ -61,6 +64,8 @@
 
   import { useI18n } from 'vue-i18n'
   import { RouteLocationNormalizedLoaded } from 'vue-router'
+  import { computed, ref, watch } from 'vue'
+  import { useTheme } from 'vuetify'
 
   const route = useRoute() as RouteLocationNormalizedLoaded;
 
@@ -68,6 +73,9 @@
 
   const drawer = ref(false)
   const group = ref(null)
+
+  const theme = useTheme();
+  const isDark = computed(() => theme.global.name.value === 'dark');
 
   watch(group, () => {
     drawer.value = false

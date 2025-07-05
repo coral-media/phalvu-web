@@ -8,10 +8,6 @@
 declare module 'vue-router/auto-routes' {
   import type {
     RouteRecordInfo,
-    ParamValue,
-    ParamValueOneOrMore,
-    ParamValueZeroOrMore,
-    ParamValueZeroOrOne,
   } from 'vue-router'
 
   /**
@@ -20,6 +16,5 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/account/login': RouteRecordInfo<'/account/login', '/account/login', Record<never, never>, Record<never, never>>,
-    '/bible/dictionary': RouteRecordInfo<'/bible/dictionary', '/bible/dictionary', Record<never, never>, Record<never, never>>,
   }
 }
