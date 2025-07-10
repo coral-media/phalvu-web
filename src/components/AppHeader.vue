@@ -1,37 +1,47 @@
 <template>
   <v-app-bar absolute color="surface" class="justify-center" :height="88">
     <template v-slot:prepend>
-      <router-link :to="{ path: t('/') }">
-        <v-img v-if="isDark"
+      <router-link :to="{ path: homePath }">
+        <v-img
+          v-if="isDark"
           height="64"
           src="@/assets/logo-dark.png"
           width="64"
         />
-        <v-img v-else
-               height="64"
-               src="@/assets/logo.png"
-               width="64"
+        <v-img
+          v-else
+          height="64"
+          src="@/assets/logo.png"
+          width="64"
         />
       </router-link>
     </template>
+
     <v-app-bar-title>PhalVu</v-app-bar-title>
+
     <template v-if="!$vuetify.display.mobile">
       <v-btn
-        v-if="route.path !== t('/account/login')"
+        v-if="route.path !== loginPath"
         color="primary"
         :ripple="true"
-        :to="t('/account/login')"
+        :to="loginPath"
         variant="flat"
       >
-        {{ t('sign in') }}
+        {{ signInLabel }}
       </v-btn>
       <locale-switcher class="ml-3" />
       <theme-switcher />
     </template>
+
     <template v-if="$vuetify.display.mobile" v-slot:append>
-      <v-app-bar-nav-icon variant="text" aria-label="Menu Drawer" @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon
+        variant="text"
+        aria-label="Menu Drawer"
+        @click.stop="drawer = !drawer"
+      />
     </template>
   </v-app-bar>
+
   <v-navigation-drawer
     class="d-flex flex-row justify-center justify-content-center"
     v-if="$vuetify.display.mobile && drawer"
@@ -40,17 +50,15 @@
     temporary
   >
     <v-list>
-      <v-list-item>
-      </v-list-item>
-      <v-list-item v-if="route.path !== t('/account/login')">
+      <v-list-item />
+      <v-list-item v-if="route.path !== loginPath">
         <v-btn
-          v-if="route.path !== t('/account/login')"
           color="primary"
           :ripple="true"
-          :to="t('/account/login')"
+          :to="loginPath"
           variant="flat"
         >
-          {{ t('sign in') }}
+          {{ signInLabel }}
         </v-btn>
       </v-list-item>
       <v-list-item>
@@ -61,37 +69,39 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue'
+import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { useTheme } from 'vuetify'
 
-  import { useI18n } from 'vue-i18n'
-  import { RouteLocationNormalizedLoaded } from 'vue-router'
-  import { computed, ref, watch } from 'vue'
-  import { useTheme } from 'vuetify'
+const { t } = useI18n()
+const route = useRoute() as RouteLocationNormalizedLoaded
+const theme = useTheme()
 
-  const route = useRoute() as RouteLocationNormalizedLoaded;
+const drawer = ref(false)
+const group = ref(null)
 
-  const { t } = useI18n()
+const isDark = computed(() => theme.global.name.value === 'dark')
 
-  const drawer = ref(false)
-  const group = ref(null)
+const signInLabel = computed(() => t('sign in'))
+const loginPath = computed(() => t('/account/login'))
+const homePath = computed(() => t('/'))
 
-  const theme = useTheme();
-  const isDark = computed(() => theme.global.name.value === 'dark');
-
-  watch(group, () => {
-    drawer.value = false
-  })
+watch(group, () => {
+  drawer.value = false
+})
 </script>
 
-<style lang="scss" scoped>
-  @import 'src/styles/variables';
+<style scoped lang="scss">
+@use '@/styles/variables';
 
-  .v-app-bar {
-    position: fixed !important;
-    //height: $app-bar-height;
-    padding-inline-start: 1rem;
-    padding-inline-end: 1rem;
-  }
-  .blurred {
-    filter: blur(8px);
-  }
+.v-app-bar {
+  position: fixed !important;
+  padding-inline-start: 1rem;
+  padding-inline-end: 1rem;
+}
+
+.blurred {
+  filter: blur(8px);
+}
 </style>

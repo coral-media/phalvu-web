@@ -7,6 +7,15 @@ import playerEn from '@/locale/player/en.json'
 import playerEs from '@/locale/player/es.json'
 import routesEn from '@/locale/routes/en.json'
 import routesEs from '@/locale/routes/es.json'
+
+const supportedLocales = ['en', 'es']
+
+let browserLocale = navigator.language.split('-')[0] // 'en-US' => 'en'
+
+if (!supportedLocales.includes(browserLocale)) {
+  browserLocale = import.meta.env.VITE_DEFAULT_LOCALE
+}
+
 export default createI18n({
   locale: import.meta.env.VITE_DEFAULT_LOCALE,
   allowComposition: true,

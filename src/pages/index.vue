@@ -1,7 +1,6 @@
 <template>
   <v-container class="index-page" fluid>
     <hero-title />
-    <verse-scroller />
   </v-container>
 </template>
 
@@ -9,7 +8,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import "src/styles/variables";
+@use "@/styles/variables";
 .index-page {
   display: flex;
   align-items: center;

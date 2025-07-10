@@ -1,105 +1,80 @@
 <template>
   <v-app>
-    <AppHeader />
+    <AppHeader/>
     <v-main>
       <v-sheet class="pages-wrapper">
-        <router-view />
+        <router-view/>
       </v-sheet>
     </v-main>
-    <AppFooter />
+    <AppFooter/>
   </v-app>
 </template>
 
 <script lang="ts" setup>
-  import { useHead, UseHeadInput } from '@unhead/vue'
-  import { onMounted, onUpdated } from 'vue'
-  import { RouteLocationNormalizedLoaded } from 'vue-router'
-  import i18n from '@/plugins/i18n'
-  import { useI18n } from 'vue-i18n'
-  import { RouteParams } from '@/router'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { useHead } from '@unhead/vue'
 
-  const appHeight = () => {
-    document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px')
-  }
+const route = useRoute()
+const { t, locale } = useI18n()
 
-  const route = useRoute() as RouteLocationNormalizedLoaded & { params: RouteParams };
-  const { t } = useI18n()
+const headMeta = computed(() => {
+  const titleKey = route.meta.title as string | undefined
+  const pageTitle = titleKey ? t(titleKey) : 'Default Title'
 
-  const hrefLangMeta = () => {
-    const links = [];
-    for (const availableLocale of i18n.global.availableLocales) {
-      links.push({
-        rel: 'alternate',
-        hreflang: availableLocale,
-        href: `${window.location.origin}${t(route.name, {}, {locale: availableLocale})}`
-      })
-    }
-    links.push({
+  const currentLocale = (route.params as any).locale || locale.value
+  const canonicalHref = `${window.location.origin}${route.fullPath}`
+
+  const linkTags = [
+    {
+      rel: 'icon',
+      href: '/favicon.ico',
+    },
+    {
+      rel: 'canonical',
+      href: canonicalHref,
+    },
+    {
       rel: 'alternate',
       hreflang: 'x-default',
-      href: `${window.location.origin}${t(route.name, {}, { locale: import.meta.env.VITE_DEFAULT_LOCALE })}`
-    })
-    return links
-  }
+      href: `${window.location.origin}/${import.meta.env.VITE_DEFAULT_LOCALE}`,
+    },
+    ...['en', 'es'].map(l => ({
+      rel: 'alternate',
+      hreflang: l,
+      href: `${window.location.origin}/${l}${route.path}`,
+    })),
+  ]
 
-  const defaultLink = () => {
-    return [
-      {
-        rel: 'icon',
-        href: '/favicon.ico',
-      },
-      {
-        rel: 'canonical',
-        href: `${window.location.origin}${route.fullPath}`,
-      },
-    ]
-  }
-
-  const meta: UseHeadInput = {
-    title: route.meta.title as string,
-    htmlAttrs: { lang: route.params.locale },
+  return {
+    title: pageTitle,
+    htmlAttrs: {
+      lang: currentLocale,
+    },
     meta: [
       {
         charset: 'UTF-8',
       },
       {
         name: 'robots',
-        content: (import.meta.env.MODE === 'production')
-          ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-          : 'noindex, nofollow',
+        content:
+          import.meta.env.MODE === 'production'
+            ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+            : 'noindex, nofollow',
       },
     ],
-    link: [
-      ...defaultLink().map((link, index) => ({ ...link, key: `default-${index}` })), // Add unique keys
-      ...hrefLangMeta().map((link, index) => ({ ...link, key: `hreflang-${index}` }))
-    ]
+    link: linkTags,
   }
+})
 
-  onBeforeMount(() => {
-    window.addEventListener('resize', appHeight)
-    appHeight()
-  })
-
-  onMounted(() => {
-    useHead(meta)
-  })
-
-  onUpdated(() => {
-    useHead({
-      ...meta,
-      link: [
-        ...defaultLink().map((link, index) => ({ ...link, key: `default-${index}` })),
-        ...hrefLangMeta().map((link, index) => ({ ...link, key: `hreflang-${index}` })),
-      ],
-    });
-  })
-
+useHead(headMeta)
 </script>
 
 <style scoped lang="scss">
-  @import 'src/styles/variables';
+@use '@/styles/variables';
 
-  .pages-wrapper {
-    width: 100vw !important;
-  }
+.pages-wrapper {
+  width: 100vw !important;
+}
 </style>

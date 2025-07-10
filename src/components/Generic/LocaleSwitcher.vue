@@ -19,12 +19,13 @@
 </template>
 
 <script lang="ts" setup>
-  import { useLocale } from 'vuetify'
-  import { ref } from 'vue'
-  import router from '@/router'
+  import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
   import { useAppStore } from '@/stores/app'
+  import router from '@/router'
 
-  const { t } = useLocale()
+  const { t } = useI18n()
+  const appStore = useAppStore()
 
   const props = defineProps({
     refreshPage: {
@@ -34,26 +35,21 @@
   })
 
   const items = [
-    {
-      locale: 'es',
-      title: 'ES',
-      label: t('locale.label.es'),
-    },
-    {
-      locale: 'en',
-      title: 'EN',
-      label: t('locale.label.en'),
-    },
+    { locale: 'es', title: 'ES', label: t('locale.label.es') },
+    { locale: 'en', title: 'EN', label: t('locale.label.en') },
   ]
 
-  const selectedLocale:Ref<string> = ref(useAppStore().locale)
+  const selectedLocale = computed({
+    get: () => appStore.locale,
+    set: (val) => appStore.switchLocale(val),
+  })
 
-  const switchLanguage = (locale:any) => {
-    useAppStore().switchLocale(locale)
+  const switchLanguage = (locale: string) => {
+    selectedLocale.value = locale as 'en' | 'es'
+
     if (props.refreshPage) {
-      //@ts-ignore
-      if(router.currentRoute.value.name !== 'default') {
-        router.push({path: t(`${router.currentRoute.value.name}`)})
+      if (router.currentRoute.value.name && router.currentRoute.value.name !== '/') {
+        router.push({ path: t(`${router.currentRoute.value.name}`) })
       } else {
         window.location.href = `/${locale}`
       }

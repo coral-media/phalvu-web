@@ -60,7 +60,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import 'src/styles/variables';
+  @use '@/styles/variables';
 
   .v-footer {
     //height: $footer-height;

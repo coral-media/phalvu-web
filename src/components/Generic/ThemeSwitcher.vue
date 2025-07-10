@@ -12,20 +12,32 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import { useTheme } from 'vuetify';
+import { ref, watch, onMounted } from 'vue'
+import { useTheme } from 'vuetify'
+import { useAppStore } from '@/stores/app'
 
-const theme = useTheme();
+const theme = useTheme()
+const appStore = useAppStore()
 
-const isDark = ref(theme.global.name.value === 'dark');
+const isDark = ref(theme.global.name.value === 'dark')
 
-watch(isDark, (newValue) => {
-  theme.global.name.value = newValue ? 'dark' : 'light';
-});
+// Initialize theme from store on mount
+onMounted(() => {
+  const storedTheme = appStore.theme
+  theme.global.name.value = storedTheme
+  isDark.value = storedTheme === 'dark'
+})
+
+// Sync Vuetify + store when switch toggled
+watch(isDark, (val) => {
+  const newTheme = val ? 'dark' : 'light'
+  theme.global.name.value = newTheme
+  appStore.switchTheme(newTheme)
+})
 </script>
 
 <style scoped lang="scss">
-@import 'src/styles/variables';
+@use '@/styles/variables';
 
 .theme-switch {
   display: flex;

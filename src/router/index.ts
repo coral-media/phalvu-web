@@ -64,11 +64,8 @@ const router = createRouter({
       path: i18nRoute.path(),
       alias: i18nRoute.alias(),
       component: () => import('@/layouts/default.vue'),
-      beforeEnter: (to: any) => {
-        useAppStore().switchLocale(to.params.locale)
-      },
       meta: {
-        title: 'Hello World',
+        title: 'default',
       },
       children: [
         {
@@ -77,7 +74,7 @@ const router = createRouter({
           name: 'default',
           component: () => import('@/pages/index.vue'),
           meta: {
-            title: 'Home',
+            title: 'home',
           },
         },
         {
@@ -86,12 +83,25 @@ const router = createRouter({
           name: '/account/login',
           component: () => import('@/pages/account/login.vue'),
           meta: {
-            title: 'Login',
+            title: 'login',
           },
         },
       ],
     },
   ],
+})
+
+router.beforeEach(async (to, from, next) => {
+  const appStore = useAppStore()
+  const paramLocale = (to.params as any).locale
+
+  await Promise.resolve() // defer to next microtask, gives persist plugin time to hydrate
+
+  if (paramLocale && appStore.locale !== paramLocale) {
+    appStore.switchLocale(paramLocale)
+  }
+
+  next()
 })
 
 // Workaround for https://github.com/vitejs/vite/issues/11804
