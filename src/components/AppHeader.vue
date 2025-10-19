@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar absolute color="surface" class="justify-center" :height="88">
+  <v-app-bar absolute color="surface" class="justify-center">
     <template v-slot:prepend>
       <router-link :to="{ path: homePath }">
         <v-img
@@ -34,6 +34,7 @@
     </template>
 
     <template v-if="$vuetify.display.mobile" v-slot:append>
+      <theme-switcher />
       <v-app-bar-nav-icon
         variant="text"
         aria-label="Menu Drawer"
@@ -93,9 +94,10 @@ watch(group, () => {
 </script>
 
 <style scoped lang="scss">
-@use '@/styles/variables';
+@use '@/styles/variables' as v;
 
 .v-app-bar {
+  height: v.$app-bar-height;
   position: fixed !important;
   padding-inline-start: 1rem;
   padding-inline-end: 1rem;

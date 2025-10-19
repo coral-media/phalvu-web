@@ -1,5 +1,5 @@
 <template>
-  <v-footer app color="surface" :height="64">
+  <v-footer app color="surface">
     <a
       v-for="item in items"
       :key="item.title"
@@ -60,10 +60,10 @@
 </script>
 
 <style scoped lang="scss">
-  @use '@/styles/variables';
+  @use '@/styles/variables' as v;
 
   .v-footer {
-    //height: $footer-height;
+    height: v.$footer-height;
     position: fixed !important;
     padding-inline-start: 1rem;
     padding-inline-end: 1rem;

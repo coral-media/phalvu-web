@@ -1,21 +1,14 @@
-import axios, { AxiosInstance } from 'axios';
+// src/services/api/index.ts
+import axios, { AxiosInstance } from 'axios'
 
-export const api = (): AxiosInstance => {
-  const axiosInstance: AxiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_HOST,
-    timeout: 60000,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-    },
-  })
-
-  if (axiosInstance === undefined) {
-    throw new TypeError("Axios instance can't be created. Ensure it is properly provided.");
-  }
-  return axiosInstance
-}
+export const axiosInstance: AxiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_HOST,
+  timeout: 60000,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+})
 
 export const params = (url: string): Record<string, any> => {
   const queryString = url.split('?')[1];
@@ -34,6 +27,3 @@ export const params = (url: string): Record<string, any> => {
 
   return params;
 };
-
-export default {
-}

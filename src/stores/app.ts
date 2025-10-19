@@ -5,7 +5,11 @@ import i18n from '@/plugins/i18n'
 export const useAppStore = defineStore('app', {
   state: () => ({
     locale: (import.meta.env.VITE_DEFAULT_LOCALE || 'es') as 'en' | 'es',
-    theme: (import.meta.env.VITE_DEFAULT_THEME || 'light') as 'dark' | 'light',
+    theme: (import.meta.env.VITE_DEFAULT_THEME || 'dark') as 'dark' | 'light',
+    auth: {
+      token: import.meta.env.VITE_DEFAULT_API_KEY || null,
+      expires: null as number | null, // You can change to Date if needed
+    },
   }),
   actions: {
     switchLocale(newLocale: string) {
@@ -17,6 +21,14 @@ export const useAppStore = defineStore('app', {
     },
     switchTheme(newTheme: string) {
       this.theme = newTheme as 'dark' | 'light'
+    },
+    setAuth({ token, expires }: { token: string; expires: number | null }) {
+      this.auth.token = token
+      this.auth.expires = expires
+    },
+    clearAuth() {
+      this.auth.token = null
+      this.auth.expires = null
     },
   },
   persist: true,

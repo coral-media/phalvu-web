@@ -72,9 +72,10 @@ useHead(headMeta)
 </script>
 
 <style scoped lang="scss">
-@use '@/styles/variables';
+@use '@/styles/variables' as v;
 
 .pages-wrapper {
   width: 100vw !important;
+  margin-top: v.$app-bar-height !important;
 }
 </style>

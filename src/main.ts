@@ -11,6 +11,7 @@ import 'unfonts.css'
 
 // Components
 import App from './App.vue'
+import './services/api/interceptors'
 
 // Composables
 import { createApp } from 'vue'
