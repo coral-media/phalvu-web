@@ -2,7 +2,7 @@
   <v-form>
     <v-select
       v-model="selectedLocale"
-      class="font-weight-bold text-uppercase d-flex align-items-center"
+      class="font-weight-bold text-uppercase d-flex align-items-center align-content-center"
       density="compact"
       item-title="locale"
       item-value="locale"
@@ -35,8 +35,8 @@
   })
 
   const items = [
-    { locale: 'es', title: 'ES', label: t('locale.label.es') },
-    { locale: 'en', title: 'EN', label: t('locale.label.en') },
+    { locale: 'es', title: 'es', label: t('locale.label.es') },
+    { locale: 'en', title: 'en', label: t('locale.label.en') },
   ]
 
   const selectedLocale = computed({
@@ -64,6 +64,10 @@
 :deep(.v-list-item-title) {
   font-weight: bold;
   text-transform: uppercase;
-  text-align: center;
+}
+:deep(.v-list-item__content) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
