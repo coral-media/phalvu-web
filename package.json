@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
-    "watch": "run-p type-check build-only",
+    "watch": "run-p type-check dev",
     "type-check": "vue-tsc --noEmit --watch",
-    "build-only": "vite build --watch -m development",
+    "build-only": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
@@ -49,7 +49,8 @@
     "unplugin-fonts": "^1.3.1",
     "unplugin-vue-components": "^28.8.0",
     "unplugin-vue-router": "^0.14.0",
-    "vite": "6.3.4",
+    "vite": "7.1.5",
+    "vite-plugin-vue-devtools": "^8.0.3",
     "vite-plugin-vue-layouts": "^0.11.0",
     "vite-plugin-vuetify": "^2.1.1",
     "vue-tsc": "^3.0.1"

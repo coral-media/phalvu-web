@@ -13,6 +13,7 @@ import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import { dirname, resolve } from 'node:path'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,6 +24,7 @@ export default defineConfig({
     target: 'esnext'
   },
   plugins: [
+    vueDevTools(),
     VueRouter({
       dts: './src/typed-router.d.ts',
     }),
