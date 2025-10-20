@@ -1,5 +1,6 @@
 {
   "sign in": "Sign In",
+  "sign out": "Close session",
   "locale": {
     "label": {
       "es": "Spanish",
@@ -8,5 +9,9 @@
   },
   "search": "Search",
   "login": "Login",
-  "home": "Home"
+  "home": "Home",
+  "email is required": "Email is required",
+  "password is required": "Password is required",
+  "email": "Email",
+  "password": "Password"
 }

@@ -55,9 +55,10 @@ async function handleLogin(payload: { email: string; password: string }) {
 }
 
 .login-form-wrapper {
+  display: flex;
   width: 100%;
   @media (min-width: 960px) {
-    max-width: 600px !important;
+    width: 600px !important;
   }
 }
 </style>

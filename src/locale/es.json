@@ -1,5 +1,6 @@
 {
-  "sign in": "Iniciar Sesión",
+  "sign in": "Iniciar sesión",
+  "sign out": "Cerrar sesión",
   "locale": {
     "label": {
       "es": "Español",
@@ -8,5 +9,9 @@
   },
   "search": "Buscar",
   "login": "Acceso",
-  "home": "Inicio"
+  "home": "Inicio",
+  "email is required": "Introduzca correo electrónico",
+  "password is required": "Introduzca su contraseña",
+  "email": "Correo electrónico",
+  "password": "Contraseña"
 }

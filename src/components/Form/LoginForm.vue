@@ -1,11 +1,11 @@
 <!-- src/components/Form/LoginForm.vue -->
 <template>
-  <v-form @submit.prevent="onSubmit" ref="formRef" v-model="valid">
+  <v-form @submit.prevent="onSubmit" ref="formRef" v-model="valid" class="d-flex flex-column w-100">
     <v-text-field
       v-model="email"
       :rules="emailRules"
       clearable
-      label="Email"
+      :label="t('email')"
       placeholder="johndoe@gmail.com"
       type="email"
       autocomplete="email"
@@ -15,8 +15,8 @@
       :rules="passwordRules"
       :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
       clearable
-      label="Password"
-      placeholder="Password"
+      :label="t('password')"
+      :placeholder="t('password')"
       :type="showPassword ? 'text' : 'password'"
       @click:append-inner="showPassword = !showPassword"
       autocomplete="current-password"
