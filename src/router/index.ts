@@ -97,11 +97,32 @@ router.beforeEach(async (to, from, next) => {
 
   await Promise.resolve() // defer to next microtask, gives persist plugin time to hydrate
 
+  // Sync locale
   if (paramLocale && appStore.locale !== paramLocale) {
     appStore.switchLocale(paramLocale)
   }
 
+  // Capture first page only once
+  if (!appStore.navigation.first) {
+    appStore.setFirstPage(to.fullPath)
+  }
+
+  // Prevent navigating to login page if already authenticated
+  const isLoginRoute = to.name === '/account/login' // or match by path
+
+  if (appStore.isAuthenticated() && isLoginRoute) {
+    // Redirect to home or another dashboard route
+    return next({
+      path: `/${paramLocale}`,
+    })
+  }
+
   next()
+})
+
+router.afterEach((to) => {
+  const appStore = useAppStore()
+  appStore.setLastPage(to.fullPath)
 })
 
 // Workaround for https://github.com/vitejs/vite/issues/11804
@@ -122,9 +143,5 @@ router.onError((err, to) => {
 router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
-
-export interface RouteParams {
-  locale?: string;
-}
 
 export default router

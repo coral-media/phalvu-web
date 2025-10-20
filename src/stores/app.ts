@@ -10,6 +10,10 @@ export const useAppStore = defineStore('app', {
       token: import.meta.env.VITE_DEFAULT_API_KEY || null,
       expires: null as number | null, // You can change to Date if needed
     },
+    navigation: {
+      first: null as string | null,
+      last: null as string | null,
+    },
   }),
   actions: {
     switchLocale(newLocale: string) {
@@ -29,6 +33,17 @@ export const useAppStore = defineStore('app', {
     clearAuth() {
       this.auth.token = null
       this.auth.expires = null
+    },
+    isAuthenticated() {
+      return this.auth?.token && this.auth?.expires
+    },
+    setFirstPage(path: string) {
+      if (!this.navigation.first) {
+        this.navigation.first = path
+      }
+    },
+    setLastPage(path: string) {
+      this.navigation.last = path
     },
   },
   persist: true,
