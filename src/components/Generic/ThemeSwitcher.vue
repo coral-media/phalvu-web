@@ -24,7 +24,7 @@ const isDark = ref(theme.global.name.value === 'dark')
 // Initialize theme from store on mount
 onMounted(() => {
   const storedTheme = appStore.theme
-  theme.global.name.value = storedTheme
+  theme.change(storedTheme)
   isDark.value = storedTheme === 'dark'
 })
 
