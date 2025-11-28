@@ -1,21 +1,19 @@
 <template>
-  <v-form>
     <v-select
       v-model="selectedLocale"
-      class="font-weight-bold text-uppercase d-flex align-items-center align-content-center"
+      class="font-weight-bold text-uppercase align-self-center"
       density="compact"
       item-title="locale"
       item-value="locale"
       :items="items"
       :rounded="true"
-      variant="outlined"
+      variant="plain"
       @update:modelValue="switchLanguage"
     >
       <template #item="{ props, item }">
         <v-list-item v-bind="props" :subtitle="item.raw.label" />
       </template>
     </v-select>
-  </v-form>
 </template>
 
 <script lang="ts" setup>
@@ -58,6 +56,10 @@
 </script>
 
 <style lang="scss" scoped>
+.v-select {
+  max-width:64px;
+  max-height: 36px;
+}
 :deep(.v-field--rounded) {
   border-radius: 14px !important;
 }

@@ -6,7 +6,7 @@
     class="theme-switch"
   >
     <template v-slot:thumb>
-      <v-icon color="primary-darken">{{ isDark ? 'mdi-moon-waxing-crescent' : 'mdi-white-balance-sunny' }}</v-icon>
+      <v-icon color="primary-darken-1">{{ isDark ? 'mdi-moon-waxing-crescent' : 'mdi-white-balance-sunny' }}</v-icon>
     </template>
   </v-switch>
 </template>
@@ -21,23 +21,21 @@ const appStore = useAppStore()
 
 const isDark = ref(theme.global.name.value === 'dark')
 
-// Initialize theme from store on mount
 onMounted(() => {
   const storedTheme = appStore.theme
   theme.change(storedTheme)
   isDark.value = storedTheme === 'dark'
 })
 
-// Sync Vuetify + store when switch toggled
 watch(isDark, (val) => {
   const newTheme = val ? 'dark' : 'light'
-  theme.global.name.value = newTheme
   appStore.switchTheme(newTheme)
+  theme.change(newTheme)
 })
 </script>
 
 <style scoped lang="scss">
-@use '@/styles/variables';
+@use '@/styles/variables' as v;
 
 .theme-switch {
   display: flex;
@@ -48,5 +46,12 @@ watch(isDark, (val) => {
 
 .theme-switch .v-icon {
   font-size: 18px;
+}
+
+:deep(.v-switch__thumb) {
+  background-color: rgb(var(--v-theme-background)) !important;
+}
+:deep(.v-switch__track) {
+  background-color: rgb(var(--v-theme-secondary)) !important;
 }
 </style>
